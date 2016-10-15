@@ -42,6 +42,7 @@ module.exports = function(app, config) {
     err.status = 404;
     next(err);
   });
+
   
   if(app.get('env') === 'development'){
     app.use(function (err, req, res, next) {

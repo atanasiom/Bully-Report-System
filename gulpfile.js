@@ -2,17 +2,40 @@ var gulp = require('gulp'),
   nodemon = require('gulp-nodemon'),
   plumber = require('gulp-plumber'),
   livereload = require('gulp-livereload');
+ts = require('gulp-typescript');
+sourcemaps = require('gulp-sourcemaps');
 
+// compile and pipe typescript
+gulp.task('typescript', function () {
+  return gulp.src('src/**/*.ts')
+    .pipe(ts())
+    .pipe(sourcemaps.init())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('app'));
+});
 
-gulp.task('develop', function () {
+// pipe everything that is not typescript to /app
+gulp.task('build', ['typescript'], function (cb) {
+  return gulp.src(['src/**/*', '!src/**/*.ts'])
+    .pipe(gulp.dest('app'));
+});
+
+/** Defaults */
+gulp.task('default', [
+  'develop'
+]);
+
+/** Developer Debugging */
+gulp.task('develop', ['build'], function () {
   livereload.listen();
   nodemon({
     script: 'app.js',
-    ext: 'js coffee nunjucks',
-    stdout: false
+    ext: 'js nunjucks',
+    stdout: false,
+    watch: 'src/**/*'
   }).on('readable', function () {
     this.stdout.on('data', function (chunk) {
-      if(/^Express server listening on port/.test(chunk)){
+      if (/^Express server listening on port/.test(chunk)) {
         livereload.changed(__dirname);
       }
     });
@@ -20,7 +43,3 @@ gulp.task('develop', function () {
     this.stderr.pipe(process.stderr);
   });
 });
-
-gulp.task('default', [
-  'develop'
-]);
