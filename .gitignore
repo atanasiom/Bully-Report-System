@@ -3,5 +3,3 @@ public/components
 .sass-cache
 
 localconfig.json
-
-app/**/*.js
