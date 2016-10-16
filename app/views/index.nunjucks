@@ -1,6 +1,62 @@
 {% extends 'layout.nunjucks' %}
 
+{% block script %}
+    <script src="/js/main.js"></script>
+{% endblock %}
+
 {% block content %}
-  <h1>{{ title }}</h1>
-  <p>Welcome to {{ title }}</p>
+  <div id="wrapper">
+      <div id="topPaneWrapper">
+            <div id="topLeftPane">
+                <img id="logo" src="/images/ticketsIcon.svg"></img>
+                <div id="titleDiv">Bully Report Tool</div>
+            </div>
+            <div id="topRightPane">
+                <div id="statusDiv">
+                    <img id="statusIcon" src="/images/ticketsIcon.svg"></img>
+                    <div id="statusText">All Tickets</div>
+                </div>
+            </div>
+      </div>
+            <div id="bottomPaneWrapper">
+                <div id="bottomLeftPane">
+                    <div class="sidebarButton" onClick="statusClick();">
+                        <img class="sidebarIcon" src="/images/ticketsIcon.svg"></img>
+                        <div class="sidebarText"><div>All Tickets</div></div>
+                    </div>
+                    <div class="sidebarButton">
+                        <img class="sidebarIcon" src="/images/unreadIcon.svg"></img>
+                        <div class="sidebarText"><div>Unread</div></div>
+                    </div>
+                    <div class="sidebarButton">
+                        <img class="sidebarIcon" src="/images/needsAttentionIcon.svg"></img>
+                        <div class="sidebarText"><div>Needs Attention</div></div>
+                    </div>
+                    <div class="sidebarButton">
+                        <img class="sidebarIcon" src="/images/ongoingIcon.svg"></img>
+                        <div class="sidebarText"><div>Ongoing</div></div>
+                    </div>
+                    <div class="sidebarButton">
+                        <img class="sidebarIcon" src="/images/resolvedIcon.svg"></img>
+                        <div class="sidebarText"><div>Resolved</div></div>
+                    </div>
+                </div>
+                <div id="bottomRightPane">
+                    <div id="tableDiv">
+                    <table id="dataTable" class="display">
+                        <thead>
+                            <tr>
+                                <th>E-mail</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                        </table></div>
+                </div>
+            </div>
+        </div>
+        <div id="modalPane" onClick="removeBlur();"></div>
 {% endblock %}

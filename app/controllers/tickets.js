@@ -21,7 +21,7 @@ function tickets(req, res, next) {
 
 function submit(req, res, next) {
   var articles = [new Article(), new Article()];
-  res.render('index', {
+  res.render('submit', {
     title: 'Ticket Submission Page',
     articles: articles
   });

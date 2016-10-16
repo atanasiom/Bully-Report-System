@@ -1,15 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
-  <title>{{ title }}</title>
-  <link rel="stylesheet" href="/css/style.css">
-  {% if ENV_DEVELOPMENT %}
-    <script src="http://localhost:35729/livereload.js"></script>
-  {% endif %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{{ title }}</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/data-table.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    {% if ENV_DEVELOPMENT %}
+        <script src="http://localhost:35729/livereload.js"></script>
+    {% endif %}
 </head>
 <body>
-  {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </body>
+    {% block script %}{% endblock %}
 </html>
