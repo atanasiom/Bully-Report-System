@@ -9,7 +9,7 @@
       <div id="brt_topPaneWrapper">
             <div id="brt_topLeftPane">
                 <img id="brt_logo" src="/images/logo.svg"></img>
-                <div id="brt_titleDiv">Bully Report Tool</div>
+                <div id="brt_titleDiv">tattle.tech</div>
             </div>
             <div id="brt_topRightPane">
                 <div id="brt_statusDiv">
