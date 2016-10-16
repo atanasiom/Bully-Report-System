@@ -17,7 +17,7 @@ export class Ticket {
     this.email = ticket.email;
     this.timestamp = ticket.timestamp;
     this.image = ticket.image;
-    this.description = ticket.category;
+    this.description = ticket.description;
     this.status = ticket.status;
     this.category = ticket.category;
   }
