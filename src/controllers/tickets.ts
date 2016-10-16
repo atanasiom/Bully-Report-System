@@ -1,6 +1,7 @@
 import * as express from 'express';
 const router = express.Router();
 import * as models from '../models';
+import * as services from '../services';
 
 module.exports = (app: any) => {
   app.use('/', router);
@@ -12,9 +13,16 @@ router.get('/submit', submit);
 
 /** Implementations */
 function tickets(req: express.Request, res: express.Response, next: express.NextFunction) {
-  res.render('index', {
-    title: 'Tickets View',
-  });
+  const email = req.query.email || 'jake.ferrante@hotmail.com';
+  services.aws.retrieveTickets(email).then(items => {
+    res.render('index', {
+      title: 'Tickets View',
+      items: items
+    });
+  }).catch((err: Error) => res.render('error', {
+    message: err.message,
+    stack: err.stack,
+  }));
 }
 
 function submit(req: express.Request, res: express.Response, next: express.NextFunction) {
