@@ -21,7 +21,26 @@ gulp.task('build', ['typescript'], function (cb) {
 });
 
 /** Defaults */
-gulp.task('default', ['develop']);
+gulp.task('default', ['production']);
+
+/** Developer Debugging */
+gulp.task('production', ['build'], function () {
+  livereload.listen();
+  nodemon({
+    script: 'app.js',
+    ext: 'js nunjucks',
+    stdout: false,
+    watch: 'src/**/*'
+  }).on('readable', function () {
+    this.stdout.on('data', function (chunk) {
+      if (/^Express server listening on port/.test(chunk)) {
+        livereload.changed(__dirname);
+      }
+    });
+    this.stdout.pipe(process.stdout);
+    this.stderr.pipe(process.stderr);
+  });
+});
 
 /** Developer Debugging */
 gulp.task('develop', ['build', 'watch'], function () {

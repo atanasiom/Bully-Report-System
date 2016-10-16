@@ -23,10 +23,9 @@ module.exports = function (app, config) {
 
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
+  // extend bodyparser to accept large image file requests
+  app.use(bodyParser.json({ limit: '200mb' }));
+  app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
   app.use(cookieParser());
   app.use(compress());
   app.use(express.static(config.root + '/public'));
@@ -34,10 +33,11 @@ module.exports = function (app, config) {
 
   app.all('/', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     next();
   });
-  
+
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function (controller) {
     require(controller)(app);
