@@ -8,7 +8,7 @@ module.exports = (app: any) => {
 };
 
 /** Routes **/
-router.get('/upload', submit);
+router.post('/submit', submit);
 
 /** Implementations */
 function submit(req: express.Request, res: express.Response, next: express.NextFunction) {

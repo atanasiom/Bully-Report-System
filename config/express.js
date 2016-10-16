@@ -9,16 +9,16 @@ var compress = require('compression');
 var methodOverride = require('method-override');
 var nunjucks = require('nunjucks');
 
-module.exports = function(app, config) {
+module.exports = function (app, config) {
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
-  
+
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'nunjucks');
   nunjucks.configure(config.root + '/app/views', {
-      autoescape: true,
-      express: app
+    autoescape: true,
+    express: app
   });
 
   // app.use(favicon(config.root + '/public/img/favicon.ico'));
@@ -32,6 +32,12 @@ module.exports = function(app, config) {
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
 
+  app.all('/', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+  });
+  
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function (controller) {
     require(controller)(app);
@@ -43,8 +49,8 @@ module.exports = function(app, config) {
     next(err);
   });
 
-  
-  if(app.get('env') === 'development'){
+
+  if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
       res.status(err.status || 500);
       res.render('error', {
@@ -57,11 +63,11 @@ module.exports = function(app, config) {
 
   app.use(function (err, req, res, next) {
     res.status(err.status || 500);
-      res.render('error', {
-        message: err.message,
-        error: {},
-        title: 'error'
-      });
+    res.render('error', {
+      message: err.message,
+      error: {},
+      title: 'error'
+    });
   });
 
 };
