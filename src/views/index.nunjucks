@@ -81,7 +81,8 @@
                         Details
                     </div>
                 </div>
-                <img id="brt_screenshot"></img>
+                <br>
+                <img id="brt_image"></img>
             </div>
         </div>
 {% endblock %}

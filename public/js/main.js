@@ -137,6 +137,9 @@ function createModal(clickedTime) {
             document.getElementById("brt_url").innerHTML = "<a href=" + obj.tickets[i].url + "\">" + obj.tickets[i].url + "</a>";
             document.getElementById("brt_category").innerHTML = obj.tickets[i].category;
             document.getElementById("brt_details").innerHTML = obj.tickets[i].description;
+            var image = document.getElementById("brt_image");
+            image.src = obj.tickets[i].image;
+            image.width = 650;
             return;
         }
     }
