@@ -32,13 +32,15 @@ function submit(req: express.Request, res: express.Response, next: express.NextF
 }
 
 function list(req: express.Request, res: express.Response, next: express.NextFunction) {
-  const email = req.query.email;
-  // attempt to upload
+  const email = req.query.email || 'jake.ferrante@hotmail.com';
   services.aws.retrieveTickets(email).then(response => {
-    if (response.err) {
-      res.send(response.err);
-      return;
-    }
-    res.send(response.data);
-  }).catch(err => { res.send(err); return; });
+    console.log(response.data);
+    res.render('index', {
+      title: 'Tickets View',
+      items: JSON.stringify(response.data)
+    });
+  }).catch((err: Error) => res.render('error', {
+    message: err.message,
+    stack: err.stack,
+  }));
 }

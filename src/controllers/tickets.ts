@@ -14,10 +14,11 @@ router.get('/submit', submit);
 /** Implementations */
 function tickets(req: express.Request, res: express.Response, next: express.NextFunction) {
   const email = req.query.email || 'jake.ferrante@hotmail.com';
-  services.aws.retrieveTickets(email).then(items => {
+  services.aws.retrieveTickets(email).then(response => {
+    console.log(response.data);
     res.render('index', {
       title: 'Tickets View',
-      items: items
+      items: JSON.stringify(response.data)
     });
   }).catch((err: Error) => res.render('error', {
     message: err.message,
