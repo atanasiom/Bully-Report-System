@@ -10,13 +10,25 @@ export interface AWSResponse {
 const client = new AWS.DynamoDB.DocumentClient();
 
 export function uploadTicket(ticket: models.Ticket): Promise<AWSResponse> {
+    console.log('uploadTickets:');
     return new Promise<AWSResponse>((resolve, reject) => {
         console.log('Importing tickets into DynamoDB. Please wait.');
         if (!ticket) return null;
+        console.log('ticket:');
+        console.log({
+            '_id': ticket.getId(),
+            'url': ticket.getUrl(),
+            'email': ticket.getEmail(),
+            'timestamp': ticket.getTimestamp(),
+            'image': ticket.getImage(),
+            'description': ticket.getDescription(),
+            'category': ticket.getCategory(),
+            'status': ticket.getStatus(),
+        });
         const params: AWS.DynamoDB.PutParam = {
             TableName: 'Reports',
             Item: {
-                'tickets_': ticket.getId(),
+                '_id': ticket.getId(),
                 'url': ticket.getUrl(),
                 'email': ticket.getEmail(),
                 'timestamp': ticket.getTimestamp(),
