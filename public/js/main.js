@@ -89,6 +89,7 @@ function addRowHandlers() {
         };
         currentRow.onclick = createClickHandler(time);
     }
+    time.innerHTML(new Date(Date.now()).toISOString());
 }
 
 function getTableRows() {
@@ -132,8 +133,8 @@ function createModal(clickedTime) {
 
             document.getElementById("brt_email").innerHTML = "Submitted by <a href=\"mailto:" + obj.tickets[i].email + "\">" + obj.tickets[i].email + "</a>";
             var d = new Date(obj.tickets[i].timestamp);
-            var dateString = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + " " + (d.getHours() >= 12 ? "PM" : "AM");
-            document.getElementById("brt_time").innerHTML = dateString;
+            // var dateString = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + " " + (d.getHours() >= 12 ? "PM" : "AM");
+            // document.getElementById("brt_time").innerHTML = dateString;
             document.getElementById("brt_url").innerHTML = "<a href=" + obj.tickets[i].url + "\">" + obj.tickets[i].url + "</a>";
             document.getElementById("brt_category").innerHTML = obj.tickets[i].category;
             document.getElementById("brt_details").innerHTML = obj.tickets[i].description;

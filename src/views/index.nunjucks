@@ -68,16 +68,16 @@
                     </div>
                 </div><br>
                 <div id="brt_email"></div>
-                <div id="brt_time"></div><br>
+                {#<div id="brt_time"></div>#}
                 <div id="brt_threeCatFlex">
                     <div id="brt_rightCat">
-                        <div id="brt_url"></div><br>
-                        <div id="brt_category"></div><br>
+                        <div id="brt_url"></div>
+                        <div id="brt_category"></div>
                         <div id="brt_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non molestie est. Nullam et nulla semper, maximus nunc cursus, dignissim erat. Cras eget lectus elementum turpis fringilla accumsan eu id leo. Vivamus faucibus felis nec dignissim tristique. Duis vehicula elit nibh, sed blandit justo viverra vel. Nullam sed convallis ipsum. Praesent ut semper erat, ac ornare risus. Vestibulum mattis imperdiet consectetur. Ut pharetra ipsum orci, non commodo nibh fermentum egestas. Quisque pretium mi eu lobortis sodales. Integer dapibus imperdiet nibh. Etiam placerat mattis mauris quis ornare.</div>
                     </div>
                     <div id="brt_threeModal">
-                        Website<br><br>
-                        Category<br><br>
+                        Website<br/>
+                        Category<br/>
                         Details
                     </div>
                 </div>
