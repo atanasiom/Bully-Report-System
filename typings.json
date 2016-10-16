@@ -1,5 +1,4 @@
 {
-  "name": "bully-report-sytstem",
   "dependencies": {
     "gulp-sourcemaps": "registry:npm/gulp-sourcemaps#2.0.0-alpha+20160823215745"
   },

@@ -7,7 +7,7 @@ sourcemaps = require('gulp-sourcemaps');
 
 // compile and pipe typescript
 gulp.task('typescript', function () {
-  return gulp.src('src/**/*.ts')
+  return gulp.src(['src/**/*.ts', './typings/**/*.d.ts'])
     .pipe(ts())
     .pipe(sourcemaps.init())
     .pipe(sourcemaps.write())

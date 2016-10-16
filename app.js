@@ -1,9 +1,7 @@
+const express = require('express'),
+config = require('./config/config');
 
-
-var express = require('express'),
-  config = require('./config/config');
-
-var app = express();
+const app = express();
 
 require('./config/express')(app, config);
 

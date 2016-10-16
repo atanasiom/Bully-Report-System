@@ -13,6 +13,6 @@ router.get('/postTicket', ticket);
 /** Implementations */
 function ticket(req: express.Request, res: express.Response, next: express.NextFunction) {
   const ticket = new models.Ticket(req.body.data);
-  
+  // services.aws.uploadTicket(ticket);
   res.send('pong');
 }
