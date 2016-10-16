@@ -16,14 +16,19 @@ $.get("http://localhost:3000/api/ticket/list", function (data) {
         obj.tickets[x] = point;
     }
     obj.tickets = data
+    updateTable(obj);
 
-$(document).ready( function () {
-    // updateTable(obj);
+    $('#dataTable').DataTable();
+    addRowHandlers();    
+});
+
+$(document).ready(function () {
     $(document.getElementsByClassName("brt_sidebarButton")[0]).addClass("brt_sidebarButtonSelected");
-} );
+});
 
 function updateTable(obj) {
-    setTimeout(function(){for(var ct = 0; ct < obj.tickets.length; ct++){
+    setTimeout(function () {
+        for (var ct = 0; ct < obj.tickets.length; ct++) {
             var row = document.createElement("tr");
             var email = document.createElement("td");
             email.appendChild(document.createTextNode(obj.tickets[ct].email));
@@ -32,7 +37,7 @@ function updateTable(obj) {
             category.appendChild(document.createTextNode(obj.tickets[ct].category));
             row.appendChild(category);
             var status = document.createElement("td");
-        
+
             var goodStatus;
             switch (obj.tickets[ct].status) {
                 case 0:
@@ -48,36 +53,36 @@ function updateTable(obj) {
                     goodStatus = "Resolved";
                     break;
             }
-        
+
             status.appendChild(document.createTextNode(goodStatus));
             row.appendChild(status);
             var time = document.createElement("td");
             time.appendChild(document.createTextNode(obj.tickets[ct].timestamp));
             row.appendChild(time);
             document.getElementById("brt_tableBody").appendChild(row);
-    }
-    $('#brt_dataTable').DataTable();
-    document.getElementById("brt_tableDiv").style.visibility = "visible";
-    document.getElementById("brt_tableDiv").style.opacity = "1";
-    document.getElementById("brt_loadingDiv").style.display = "none";
-    addRowHandlers();
+        }
+        $('#brt_dataTable').DataTable();
+        document.getElementById("brt_tableDiv").style.visibility = "visible";
+        document.getElementById("brt_tableDiv").style.opacity = "1";
+        document.getElementById("brt_loadingDiv").style.display = "none";
+        addRowHandlers();
     }, 0);
 }
 
-$(document).keyup(function(e) {
-  if (e.keyCode === 27) $('#brt_modalPane').click();   // esc
+$(document).keyup(function (e) {
+    if (e.keyCode === 27) $('#brt_modalPane').click();   // esc
 });
 
 function addRowHandlers() {
     var rows = getTableRows();
-    
+
     for (i = 1; i < rows.length; i++) {
         var currentRow = rows[i];
         var timeCol = currentRow.getElementsByTagName("td")[3];
         var time = timeCol.innerHTML;
-        
-        var createClickHandler = function(time) {
-            return function() {
+
+        var createClickHandler = function (time) {
+            return function () {
                 addBlur();
                 createModal(time);
             };
@@ -95,7 +100,7 @@ function createModal(clickedTime) {
     var dropDiv = document.getElementById("brt_selectDiv");
     var dropMenu = dropDiv.getElementsByTagName("select")[0];
     var optionArr = dropMenu.getElementsByTagName("option");
-    
+
     for (i = 0; i < obj.tickets.length; i++) {
         if (obj.tickets[i].timestamp == clickedTime) {
             var status;
@@ -103,7 +108,7 @@ function createModal(clickedTime) {
             var needsAttention = "<option>Needs Attention</option>"
             var ongoing = "<option>Ongoing</option>"
             var resolved = "<option>Resolved</option>"
-            
+
             switch (obj.tickets[i].status) {
                 case 0:
                     status = "Unread";
@@ -122,12 +127,12 @@ function createModal(clickedTime) {
                     resolved = "<option selected=\"selected\">Resolved</option>"
                     break;
             }
-            
+
             dropMenu.innerHTML = unread + needsAttention + ongoing + resolved;
-            
+
             document.getElementById("brt_email").innerHTML = "Submitted by <a href=\"mailto:" + obj.tickets[i].email + "\">" + obj.tickets[i].email + "</a>";
             var d = new Date(obj.tickets[i].timestamp);
-            var dateString = (d.getMonth()+1) + "/" +  d.getDate() + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + " " + (d.getHours() >= 12 ? "PM" : "AM");
+            var dateString = (d.getMonth() + 1) + "/" + d.getDate() + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes() + " " + (d.getHours() >= 12 ? "PM" : "AM");
             document.getElementById("brt_time").innerHTML = dateString;
             document.getElementById("brt_url").innerHTML = "<a href=" + obj.tickets[i].url + "\">" + obj.tickets[i].url + "</a>";
             document.getElementById("brt_category").innerHTML = obj.tickets[i].category;
@@ -151,34 +156,34 @@ function removeBlur() {
     document.getElementById("brt_modal").style.opacity = "0";
 }
 
-function modalClick(event){
+function modalClick(event) {
     event.stopPropagation();
 }
 
 function statusClick(status) {
     selectSidebarItem(status);
-    
+
     if (status == -1) {
         $("#brt_tableBody tr").remove();
         updateTable(obj);
         return;
     }
-    
-    var filteredObj = {"tickets":[]};
-    
+
+    var filteredObj = { "tickets": [] };
+
     for (var i = 0; i < obj.tickets.length; i++) {
         if (obj.tickets[i].status == status) {
             filteredObj.tickets.push(obj.tickets[i]);
         }
     }
-    
+
     $("#brt_tableBody tr").remove();
     updateTable(filteredObj);
 }
 
 function selectSidebarItem(status) {
     var sidebarButtons = document.getElementsByClassName("brt_sidebarButton");
-    
+
     for (var i = 0; i < sidebarButtons.length; i++) {
         if (status + 1 == i) {
             $(sidebarButtons[i]).addClass("brt_sidebarButtonSelected");

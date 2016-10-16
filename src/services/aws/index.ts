@@ -45,7 +45,7 @@ export function retrieveTickets(email: any): Promise<AWSResponse> {
         let scan_params: any = {
             TableName: 'Reports',
             ProjectionExpression: '#url, email, image, description, category, #status, #timestamp',
-            FilterExpression: 'email = :email',
+            FilterExpression: '',
             ExpressionAttributeNames: {
                 '#status': 'status',
                 '#url': 'url',
