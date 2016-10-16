@@ -30,6 +30,11 @@ var obj = {"tickets":[
 ]};
 
 $(document).ready( function () {
+    $.get( "http://bully-report-system.azurewebsites.net/api/ticket/submit", function( data ) {
+        $(obj).html(data);
+    }).fail(function() {
+        alert( "error" );
+    });
     updateTable(obj);
     $(document.getElementsByClassName("brt_sidebarButton")[0]).addClass("brt_sidebarButtonSelected");
 } );
@@ -144,6 +149,7 @@ function createModal(clickedTime) {
             document.getElementById("brt_time").innerHTML = dateString;
             document.getElementById("brt_url").innerHTML = "<a href=" + obj.tickets[i].url + "\">" + obj.tickets[i].url + "</a>";
             document.getElementById("brt_category").innerHTML = obj.tickets[i].category;
+            document.getElementById("brt_description").innerHTML = obj.tickets[i].description;
             return;
         }
     }
