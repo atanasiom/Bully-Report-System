@@ -45,7 +45,7 @@ export function retrieveTickets(email: any): Promise<AWSResponse> {
         let scan_params: any = {
             TableName: 'Reports',
             ProjectionExpression: '#url, email, image, description, category, #status, #timestamp',
-            FilterExpression: '',
+            FilterExpression: 'email = :email',
             ExpressionAttributeNames: {
                 '#status': 'status',
                 '#url': 'url',
@@ -65,7 +65,7 @@ export function retrieveTickets(email: any): Promise<AWSResponse> {
                 console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
             } else {
                 // print all the movies
-                data.Items.forEach((ticket: models.interfaces.Ticket) => console.log);
+                // data.Items.forEach((ticket: models.interfaces.Ticket) => console.log);
 
                 // continue scanning if we have more movies
                 if (typeof data.LastEvaluatedKey !== 'undefined') {

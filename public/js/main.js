@@ -10,7 +10,7 @@ $.get("http://localhost:3000/api/ticket/list", function (data) {
             description: data[x].description,
             category: data[x].category,
             image: data[x].image,
-            timestamp: data[x].timestamp,
+            timestamp: new Date(Date.parse(data[x].timestamp)),
             status: data[x].status,
         }
         obj.tickets[x] = point;
