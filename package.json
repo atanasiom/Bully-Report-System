@@ -6,7 +6,7 @@
     "node": "6.6.0"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "gulp & node app.js"
   },
   "dependencies": {
     "aws-sdk": "^2.6.9",
@@ -17,7 +17,6 @@
     "express": "^4.13.3",
     "glob": "^6.0.4",
     "gulp-sourcemaps": "^2.1.1",
-    "gulp-typescript": "^3.0.2",
     "method-override": "^2.3.0",
     "morgan": "^1.6.1",
     "nunjucks": "^2.0.0",
