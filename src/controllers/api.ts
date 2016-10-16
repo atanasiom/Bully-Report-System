@@ -32,7 +32,7 @@ function submit(req: express.Request, res: express.Response, next: express.NextF
 }
 
 function list(req: express.Request, res: express.Response, next: express.NextFunction) {
-  const email = req.query.email;
+  const email = req.query.email || 'jake.ferrante@hotmail.com';
   // attempt to upload
   services.aws.retrieveTickets(email).then(response => {
     if (response.err) {
@@ -41,4 +41,16 @@ function list(req: express.Request, res: express.Response, next: express.NextFun
     }
     res.send(response.data);
   }).catch(err => { res.send(err); return; });
+
+  // services.aws.retrieveTickets(email).then(response => {
+  //   console.log(response.data);
+  //   res.render('index', {
+  //     title: 'Tickets View',
+  //     items: JSON.stringify(response.data)
+  //   });
+  // }).catch((err: Error) => res.render('error', {
+  //   message: err.message,
+  //   stack: err.stack,
+  // }));
+
 }

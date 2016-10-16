@@ -1,44 +1,26 @@
-var obj = {"tickets":[
-    {"email": "poop@poop.com1",
-    "description": "poop desc1",
-    "category": "poop cat1",
-    "image": "poop img1",
-    "url": "poop url1",
-    "timestamp": 1476610889008,
-    "status": 1},
-    {"email": "poop@poop.com2",
-    "description": "poop desc2",
-    "category": "poop cat2",
-    "image": "poop img2",
-    "url": "poop url2",
-    "timestamp": 1476610903695,
-    "status": 2},
-    {"email": "poop@poop.com3",
-    "description": "poop desc3",
-    "category": "poop cat3",
-    "image": "poop img3",
-    "url": "poop url3",
-    "timestamp": 1476610915238,
-    "status": 3},
-    {"email": "poop@poop.com4",
-    "description": "poop desc4",
-    "category": "poop cat4",
-    "image": "poop img4",
-    "url": "poop url4",
-    "timestamp": 1476610927056,
-    "status": 0}
-]};
+var obj = {
+    "tickets": []
+};
+
+$.get("http://localhost:3000/api/ticket/list", function (data) {
+    console.log(data)
+    for (var x = 0; x < data.length; x++) {
+        const point = {
+            email: data[x].email,
+            description: data[x].description,
+            category: data[x].category,
+            image: data[x].image,
+            timestamp: data[x].timestamp,
+            status: data[x].status,
+        }
+        obj.tickets[x] = point;
+    }
+    obj.tickets = data
 
 $(document).ready( function () {
-//    $.get( "http://bully-report-system.azurewebsites.net/api/ticket/submit", function( data ) {
-//        $(obj).html(data);
-//    }).fail(function() {
-//        alert( "error" );
-//    });
-    updateTable(obj);
+    // updateTable(obj);
     $(document.getElementsByClassName("brt_sidebarButton")[0]).addClass("brt_sidebarButtonSelected");
 } );
-
 
 function updateTable(obj) {
     setTimeout(function(){for(var ct = 0; ct < obj.tickets.length; ct++){
