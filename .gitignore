@@ -4,3 +4,5 @@ public/components
 
 app/
 localconfig.json
+
+**/.DS_Store
