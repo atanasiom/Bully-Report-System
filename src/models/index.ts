@@ -4,6 +4,7 @@ export { interfaces };
 
 
 export class Ticket {
+  public id: string;
   public url: string;
   public email: string;
   public timestamp: string;
@@ -13,6 +14,7 @@ export class Ticket {
   public status: string;
 
   public constructor(ticket: interfaces.Ticket) {
+    this.id = `${ticket.email}:${ticket.timestamp}`;
     this.url = ticket.url;
     this.email = ticket.email;
     this.timestamp = ticket.timestamp;
@@ -21,6 +23,7 @@ export class Ticket {
     this.status = ticket.status;
     this.category = ticket.category;
   }
+  public getId() { return this.id; }
   public getUrl() { return this.url; }
   public getEmail() { return this.email; }
   public getTimestamp() { return this.timestamp; }
