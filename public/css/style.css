@@ -1,4 +1,4 @@
-html, body, #wrapper, #bottomPaneWrapper {
+html, body, #brt_wrapper, #brt_bottomPaneWrapper {
     height: 100%;
 }
 
@@ -7,71 +7,69 @@ body {
     margin: 0;
 }
 
-.sidebarButton {
+.brt_sidebarButton {
     display: flex;
-    height: 50px;
+    height: 56px;
     padding: 10px 0;
 }
 
-.sidebarButton:hover {
+.brt_sidebarButton:hover, .brt_sidebarButtonSelected {
     background-color: #4089b1;
 }
 
-.sidebarButton:hover > img {
+.brt_sidebarButton:hover > img, .brt_sidebarButtonSelected > img {
     filter: invert(100%);
 }
 
-.sidebarButton:hover > div {
+.brt_sidebarButton:hover > div, .brt_sidebarButtonSelected > div {
     color: white;
 }
 
-.sidebarIcon {
-    width: 50px;
+.brt_sidebarIcon {
+    width: 60px;
     padding-left: 20px;
     filter: invert(45%);
 }
 
-.sidebarText {
+.brt_sidebarText {
     width: 100%;
     padding-left: 20px;
-    line-height: 50px;
     font-size: 1.5em;
     color: #5f6d75;
 }
 
-#titleDiv {
-    line-height: 75px;
-    font-size: 2em;
+#brt_titleDiv {
+    line-height: 75px; 
     padding-left: 20px;
     color: #4089b1;
 }
 
-#logo {    
-    width: 50px;
+#brt_logo {
+    width: 70px;
     padding-left: 20px;
+    padding-right: 20px;
 }
 
-#statusDiv {
+#brt_statusDiv {
     display: flex;
 }
 
-#statusText, #statusIcon {
+#brt_statusText, #brt_statusIcon {
     padding-left: 20px;
 }
 
-#statusIcon {
-    width: 40px;
+#brt_statusIcon {
+    width: 50px;
     filter: invert(45%);
 }
 
-#statusText {
+#brt_statusText {
     line-height: 75px;
     text-align: center;
-    font-size: 2em;
     color: #5f6d75;
 }
 
-#modalPane {
+#brt_modalPaneClicker {
     position: fixed;
     display: none;
     top: 0;
@@ -80,61 +78,120 @@ body {
     right: 0;
 }
 
-#wrapper {
+#brt_modalPane {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    z-index: 100000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+}
+
+#brt_modal {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    background-color: white;
+    width: 700px;
+    height: 600px;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+    padding: 30px;
+}
+
+#brt_selectionArea {
+    display: flex;
+}
+
+#brt_email, #brt_status, #brt_threeModal, #brt_rightCat, #brt_selectDiv {
+    margin 0 auto;
+    width: 100%;
+    text-align: left;
+}
+
+#brt_details {
+    text-align: justify;
+}
+
+#brt_threeModal, #brt_status {
+    width: 25%;
+}
+
+#brt_threeCatFlex {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+
+#brt_wrapper {
     display: flex;
     flex-direction: column;
     background-color: white;
     transition: filter 0.3s;
-    /*filter: blur(20px) brightness(80%);*/
 }
 
-#topLeftPane, #bottomLeftPane {
-    width: 400px;
+#brt_topLeftPane, #brt_bottomLeftPane {
+    min-width: 277px;
 }
 
-#topRightPane, #bottomRightPane {
+#brt_topRightPane, #brt_bottomRightPane {
     flex-grow: 1;
 }
 
-#topPaneWrapper, #bottomPaneWrapper {
+#brt_topPaneWrapper, #brt_bottomPaneWrapper {
     display: flex;
     flex-direction: row;
 }
 
-#bottomRightPane, #bottomLeftPane, #topRightPane {
+#brt_bottomRightPane, #brt_bottomLeftPane, #brt_topRightPane {
     border-style: solid;
     border-color: rgba(143, 166, 179, 0.38);
     border-width: 0;
 }
 
-#topPaneWrapper {
+#brt_topPaneWrapper {
     height: 83px; 
+    font-size: 1.5em;
 }
 
-#topLeftPane, #topRightPane {
+#brt_topLeftPane, #brt_topRightPane {
     height: 100%;
 }
 
-#topLeftPane {
+#brt_topLeftPane {
     display: flex;
 }
 
-#topRightPane {
+#brt_topRightPane {
     display: flex;
     align-content: space-between;
     border-width: 0 0 0 1px;
 }
 
-#bottomLeftPane {
+#brt_bottomLeftPane {
     display: flex;
     flex-direction: column;
     border-width: 1px 0 0 0;
 }
 
-#bottomRightPane {
+#brt_bottomRightPane {
     flex-grow: 1;
     background-color: #f8fafc;
     border-width: 1px 0 0 1px;
 }
 
-#tableDiv{padding: 10px;}
+#brt_tableDiv {
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+    padding: 20px;
+}
+
+#brt_loadingDiv {
+    padding-top: 20px;
+    text-align: center;
+}

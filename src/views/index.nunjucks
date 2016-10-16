@@ -5,45 +5,46 @@
 {% endblock %}
 
 {% block content %}
-  <div id="wrapper">
-      <div id="topPaneWrapper">
-            <div id="topLeftPane">
-                <img id="logo" src="/images/ticketsIcon.svg"></img>
-                <div id="titleDiv">Bully Report Tool</div>
+  <div id="brt_wrapper">
+      <div id="brt_topPaneWrapper">
+            <div id="brt_topLeftPane">
+                <img id="brt_logo" src="/images/logo.svg"></img>
+                <div id="brt_titleDiv">Bully Report Tool</div>
             </div>
-            <div id="topRightPane">
-                <div id="statusDiv">
-                    <img id="statusIcon" src="/images/ticketsIcon.svg"></img>
-                    <div id="statusText">All Tickets</div>
+            <div id="brt_topRightPane">
+                <div id="brt_statusDiv">
+                    <img id="brt_statusIcon" src="/images/ticketsIcon.svg"></img>
+                    <div id="brt_statusText">All Tickets</div>
                 </div>
             </div>
       </div>
-            <div id="bottomPaneWrapper">
-                <div id="bottomLeftPane">
-                    <div class="sidebarButton" onClick="statusClick();">
-                        <img class="sidebarIcon" src="/images/ticketsIcon.svg"></img>
-                        <div class="sidebarText"><div>All Tickets</div></div>
-                    </div>
-                    <div class="sidebarButton">
-                        <img class="sidebarIcon" src="/images/unreadIcon.svg"></img>
-                        <div class="sidebarText"><div>Unread</div></div>
-                    </div>
-                    <div class="sidebarButton">
-                        <img class="sidebarIcon" src="/images/needsAttentionIcon.svg"></img>
-                        <div class="sidebarText"><div>Needs Attention</div></div>
-                    </div>
-                    <div class="sidebarButton">
-                        <img class="sidebarIcon" src="/images/ongoingIcon.svg"></img>
-                        <div class="sidebarText"><div>Ongoing</div></div>
-                    </div>
-                    <div class="sidebarButton">
-                        <img class="sidebarIcon" src="/images/resolvedIcon.svg"></img>
-                        <div class="sidebarText"><div>Resolved</div></div>
-                    </div>
+        <div id="brt_bottomPaneWrapper">
+            <div id="brt_bottomLeftPane">
+                <div class="brt_sidebarButton" onClick="statusClick(-1);">
+                    <img class="brt_sidebarIcon" src="/images/ticketsIcon.svg"></img>
+                    <div class="brt_sidebarText"><div>All Tickets</div></div>
                 </div>
-                <div id="bottomRightPane">
-                    <div id="tableDiv">
-                    <table id="dataTable" class="display">
+                <div class="brt_sidebarButton" onClick="statusClick(0);">
+                    <img class="brt_sidebarIcon" src="/images/unreadIcon.svg"></img>
+                    <div class="brt_sidebarText"><div>Unread</div></div>
+                </div>
+                <div class="brt_sidebarButton" onClick="statusClick(1);">
+                    <img class="brt_sidebarIcon" src="/images/needsAttentionIcon.svg"></img>
+                    <div class="brt_sidebarText"><div>Needs Attention</div></div>
+                </div>
+                <div class="brt_sidebarButton" onClick="statusClick(2);">
+                    <img class="brt_sidebarIcon" src="/images/ongoingIcon.svg"></img>
+                    <div class="brt_sidebarText"><div>Ongoing</div></div>
+                </div>
+                <div class="brt_sidebarButton" onClick="statusClick(3);">
+                    <img class="brt_sidebarIcon" src="/images/resolvedIcon.svg"></img>
+                    <div class="brt_sidebarText"><div>Resolved</div></div>
+                </div>
+            </div>
+            <div id="brt_bottomRightPane">
+                <div id="brt_loadingDiv">Loading...</div>
+                <div id="brt_tableDiv">
+                    <table id="brt_dataTable" class="display">
                         <thead>
                             <tr>
                                 <th>E-mail</th>
@@ -52,11 +53,35 @@
                                 <th>Time</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody">
+                        <tbody id="brt_tableBody">
                         </tbody>
-                        </table></div>
+                    </table></div>
                 </div>
             </div>
         </div>
-        <div id="modalPane" onClick="removeBlur();"></div>
+        <div id="brt_modalPane" onClick="removeBlur();">
+            <div id="brt_modal" onClick="modalClick(event);">
+                <div id="brt_selectionArea">
+                    <div id="brt_status">Set Status</div>
+                    <div id="brt_selectDiv">
+                        <select></select>
+                    </div>
+                </div><br>
+                <div id="brt_email"></div>
+                <div id="brt_time"></div><br>
+                <div id="brt_threeCatFlex">
+                    <div id="brt_rightCat">
+                        <div id="brt_url"></div><br>
+                        <div id="brt_category"></div><br>
+                        <div id="brt_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non molestie est. Nullam et nulla semper, maximus nunc cursus, dignissim erat. Cras eget lectus elementum turpis fringilla accumsan eu id leo. Vivamus faucibus felis nec dignissim tristique. Duis vehicula elit nibh, sed blandit justo viverra vel. Nullam sed convallis ipsum. Praesent ut semper erat, ac ornare risus. Vestibulum mattis imperdiet consectetur. Ut pharetra ipsum orci, non commodo nibh fermentum egestas. Quisque pretium mi eu lobortis sodales. Integer dapibus imperdiet nibh. Etiam placerat mattis mauris quis ornare.</div>
+                    </div>
+                    <div id="brt_threeModal">
+                        Website<br><br>
+                        Category<br><br>
+                        Details
+                    </div>
+                </div>
+                <img id="brt_screenshot"></img>
+            </div>
+        </div>
 {% endblock %}
