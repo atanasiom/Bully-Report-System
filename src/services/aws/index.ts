@@ -14,17 +14,6 @@ export function uploadTicket(ticket: models.Ticket): Promise<AWSResponse> {
     return new Promise<AWSResponse>((resolve, reject) => {
         console.log('Importing tickets into DynamoDB. Please wait.');
         if (!ticket) return null;
-        console.log('ticket:');
-        console.log({
-            '_id': ticket.getId(),
-            'url': ticket.getUrl(),
-            'email': ticket.getEmail(),
-            'timestamp': ticket.getTimestamp(),
-            'image': ticket.getImage(),
-            'description': ticket.getDescription(),
-            'category': ticket.getCategory(),
-            'status': ticket.getStatus(),
-        });
         const params: AWS.DynamoDB.PutParam = {
             TableName: 'Reports',
             Item: {
@@ -53,32 +42,44 @@ export function uploadTicket(ticket: models.Ticket): Promise<AWSResponse> {
 
 export function retrieveTickets(email: any): Promise<AWSResponse> {
     return new Promise<AWSResponse>((resolve, reject) => {
-        console.log('Querying for movies from 1985.');
-        const params: AWS.DynamoDB.QueryParam = {
+        let scan_params: any = {
             TableName: 'Reports',
-            // FilterExpression: 'tickets_',
-            ProjectionExpression: 'email',
-            KeyConditionExpression: 'email = :email',
-            // ExpressionAttributeNames: {
-
-            // },
+            ProjectionExpression: '#url, email, image, description, category, #status, #timestamp',
+            FilterExpression: 'email = :email',
+            ExpressionAttributeNames: {
+                '#status': 'status',
+                '#url': 'url',
+                '#timestamp': 'timestamp',
+            },
             ExpressionAttributeValues: {
-                ':email': 'email'
+                ':email': email,
             }
         };
 
-        client.query(params, (err: any, data: any) => {
-            const res = { err, data };
+        client.scan(scan_params, onScan);
+
+        let _scan_complete = 1;
+        function onScan(err: any, data: any) {
             if (err) {
-                console.error('AWS Error:', JSON.stringify(err, null, 2));
-                return reject(res);
+                reject({ err, data: undefined });
+                console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
             } else {
-                return resolve(res);
+                // print all the movies
+                data.Items.forEach((ticket: models.interfaces.Ticket) => console.log);
+
+                // continue scanning if we have more movies
+                if (typeof data.LastEvaluatedKey !== 'undefined') {
+                    console.log('Scanning for more...');
+                    scan_params.ExclusiveStartKey = data.LastEvaluatedKey;
+                    client.scan(scan_params, onScan);
+                }
+                if (_scan_complete) {
+                    resolve({ err: undefined, data: data.Items });
+                }
             }
-        });
+        }
     });
 }
-
 
 function init() {
     // load config

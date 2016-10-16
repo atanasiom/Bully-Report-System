@@ -13,9 +13,6 @@ router.post('/submit', submit);
 
 /** Implementations */
 function submit(req: express.Request, res: express.Response, next: express.NextFunction) {
-  // attempt to upload
-  console.log('raw:');
-  console.log(req.body);
   const data: models.interfaces.Ticket = {
     description: req.body.description,
     email: req.body.email,
@@ -35,8 +32,9 @@ function submit(req: express.Request, res: express.Response, next: express.NextF
 }
 
 function list(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const email = req.query.email;
   // attempt to upload
-  services.aws.retrieveTickets('email').then(response => {
+  services.aws.retrieveTickets(email).then(response => {
     if (response.err) {
       res.send(response.err);
       return;
