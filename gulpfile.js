@@ -21,12 +21,10 @@ gulp.task('build', ['typescript'], function (cb) {
 });
 
 /** Defaults */
-gulp.task('default', [
-  'develop'
-]);
+gulp.task('default', ['develop']);
 
 /** Developer Debugging */
-gulp.task('develop', ['build'], function () {
+gulp.task('develop', ['build', 'watch'], function () {
   livereload.listen();
   nodemon({
     script: 'app.js',
@@ -42,4 +40,8 @@ gulp.task('develop', ['build'], function () {
     this.stdout.pipe(process.stdout);
     this.stderr.pipe(process.stderr);
   });
+});
+
+gulp.task('watch', function () {
+  return gulp.watch('src/**/*', ['build']);
 });
