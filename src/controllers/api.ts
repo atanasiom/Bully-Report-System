@@ -8,30 +8,39 @@ module.exports = (app: any) => {
 };
 
 /** Routes **/
+router.get('/list', list);
 router.post('/submit', submit);
 
 /** Implementations */
 function submit(req: express.Request, res: express.Response, next: express.NextFunction) {
   // attempt to upload
-  try {
-    const data: models.interfaces.Ticket = {
-      category: req.body.category,
-      description: req.body.description,
-      email: req.body.email,
-      image: req.body.image,
-      timestamp: new Date(Date.parse(req.body.timestamp)),
-      url: req.body.url
-    };
-    services.aws.uploadTicket(new models.Ticket(data)).then(response => {
-      if (response.err) {
-        res.send(response.err);
-        return;
-      }
-      res.send(response.data);
-    });
-  } catch (e) {
-    // or catch and respond with error 
-    res.send(e);
-  }
-  return;
+  console.log('raw:');
+  console.log(req.body);
+  const data: models.interfaces.Ticket = {
+    description: req.body.description,
+    email: req.body.email,
+    image: req.body.image,
+    timestamp: req.body.timestamp || new Date(Date.now()).getTime().toString(),
+    url: req.body.url,
+    status: req.body.status,
+    category: req.body.category
+  };
+  services.aws.uploadTicket(new models.Ticket(data)).then(response => {
+    if (response.err) {
+      res.send(response.err);
+      return;
+    }
+    res.send(response.data);
+  }).catch(err => { res.send(err); return; });
+}
+
+function list(req: express.Request, res: express.Response, next: express.NextFunction) {
+  // attempt to upload
+  services.aws.retrieveTickets('email').then(response => {
+    if (response.err) {
+      res.send(response.err);
+      return;
+    }
+    res.send(response.data);
+  }).catch(err => { res.send(err); return; });
 }

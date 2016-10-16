@@ -1,8 +1,6 @@
 import * as models from '../../models';
 import * as AWS from 'aws-sdk';
 init();
-console.log('Amazon config:');
-// console.log(AWS.config);
 
 export interface AWSResponse {
     err?: any;
@@ -12,34 +10,75 @@ export interface AWSResponse {
 const client = new AWS.DynamoDB.DocumentClient();
 
 export function uploadTicket(ticket: models.Ticket): Promise<AWSResponse> {
+    console.log('uploadTickets:');
     return new Promise<AWSResponse>((resolve, reject) => {
         console.log('Importing tickets into DynamoDB. Please wait.');
         if (!ticket) return null;
-        const params = {
+        console.log('ticket:');
+        console.log({
+            'tickets_': `${ticket.getEmail()}:${ticket.getTimestamp()}`,
+            'url': ticket.getUrl(),
+            'email': ticket.getEmail(),
+            'timestamp': ticket.getTimestamp(),
+            'image': ticket.getImage(),
+            'description': ticket.getDescription(),
+            'category': ticket.getCategory(),
+            'status': ticket.getStatus(),
+        });
+        const params: AWS.DynamoDB.PutParam = {
             TableName: 'Reports',
             Item: {
+                'tickets_': `${ticket.getEmail()}:${ticket.getTimestamp()}`,
                 'url': ticket.getUrl(),
-                'username': ticket.getUsername(),
+                'email': ticket.getEmail(),
                 'timestamp': ticket.getTimestamp(),
-                'image': ticket.getImage(),        // expects a base64 encoded image string
+                'image': ticket.getImage(),
                 'description': ticket.getDescription(),
                 'category': ticket.getCategory(),
+                'status': ticket.getStatus(),
             }
         };
 
         client.put(params, (err: any, data: any) => {
-            const res = {err, data};
+            const res = { err, data };
             if (err) {
-                console.error('Unable to add movie', ticket.getTimestamp(), '. Error JSON:', JSON.stringify(err, null, 2));
-                reject(res);
-                return;
+                console.error('AWS Error:', JSON.stringify(err, null, 2));
+                return reject(res);
             } else {
-                console.log('PutItem succeeded:', ticket.getTimestamp());
-                resolve(res);
+                return resolve(res);
             }
         });
     });
 }
+
+export function retrieveTickets(email: any): Promise<AWSResponse> {
+    return new Promise<AWSResponse>((resolve, reject) => {
+        console.log('Querying for movies from 1985.');
+        const params: AWS.DynamoDB.QueryParam = {
+            TableName: 'Reports',
+            // FilterExpression: 'tickets_',
+            ProjectionExpression: 'email',
+            KeyConditionExpression: 'email = :email',
+            // ExpressionAttributeNames: {
+
+            // },
+            ExpressionAttributeValues: {
+                ':email': 'email'
+            }
+        };
+
+        client.query(params, (err: any, data: any) => {
+            const res = { err, data };
+            if (err) {
+                console.error('AWS Error:', JSON.stringify(err, null, 2));
+                return reject(res);
+            } else {
+                return resolve(res);
+            }
+        });
+    });
+}
+
 
 function init() {
     // load config
