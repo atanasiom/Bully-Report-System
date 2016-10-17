@@ -65,7 +65,6 @@ function updateTable(obj) {
 		addRowHandlers();
 	}, 0);
 }
-
 $(document).keyup(function (e) {
 	if (e.keyCode === 27) $('#brt_modalPane').click(); // esc
 });
@@ -151,7 +150,7 @@ function removeBlur() {
 	document.getElementById("brt_modal").style.opacity = "0";
 }
 
-function modalClick(event) {}
+function modalClick(event) {
 	event.stopPropagation();
 }
 
