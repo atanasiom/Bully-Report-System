@@ -6,12 +6,12 @@ $.get("http://localhost:3000/api/ticket/list", function (data) {
 	console.log(data)
 	for (var x = 0; x < data.length; x++) {
 		const point = {
-			email: data[x].email,
-			description: data[x].description,
-			category: data[x].category,
-			image: data[x].image,
-			timestamp: new Date(Date.parse(data[x].timestamp)),
-			status: data[x].status
+			email: data[x].email
+			, description: data[x].description
+			, category: data[x].category
+			, image: data[x].image
+			, timestamp: new Date(Date.parse(data[x].timestamp))
+			, status: data[x].status
 		}
 		obj.tickets[x] = point;
 	}
